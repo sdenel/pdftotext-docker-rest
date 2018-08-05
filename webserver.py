@@ -7,6 +7,7 @@ from tempfile import TemporaryDirectory
 
 from flask import Flask, request, send_file
 
+app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def handle_file():
@@ -24,7 +25,6 @@ def handle_file():
 
 
 if __name__ == "__main__":
-    app = Flask(__name__)
     ip = socket.gethostbyname(socket.gethostname())
     print("start listening:", ip, file=sys.stderr)
     app.run(host='0.0.0.0', port=80)

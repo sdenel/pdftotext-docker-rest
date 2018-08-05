@@ -1,15 +1,16 @@
 [![Build Status](https://travis-ci.com/sdenel/pdftotext-docker-rest.svg?branch=master)](https://travis-ci.com/sdenel/pdftotext-docker-rest)
 
-pdftotext. As a webservice, containerized!
+pdftotext. As a webservice, containerized! The image is based on Alpine.
 
 ## Usage
 
 ```bash
-docker run -d --name pdf2htmlex sdenel/pdftotext-docker-rest
-
+docker run -d -p8080:80 sdenel/pdftotext-docker-rest
+```
+Then, to test it:
+```bash
 wget http://www.xmlpdf.com/manualfiles/hello-world.pdf
-PDFTOTEXT_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' pdf2htmlex`
-curl -F "file=@hello-world.pdf;" http://$PDFTOTEXT_IP/ > hello-world.html
+curl -F "file=@hello-world.pdf;" http://localhost:8080/
 ```
 
 # Contributions welcomed!

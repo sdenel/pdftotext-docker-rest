@@ -5,6 +5,8 @@ pycodestyle --first webserver.py
 
 docker build . -t pdftotext-docker-rest
 docker run -d --name pdftotext-docker-rest pdftotext-docker-rest
+sleep 5
+
 wget http://www.xmlpdf.com/manualfiles/hello-world.pdf
 PDFTOTEXT_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' pdftotext-docker-rest`
 curl -F "file=@hello-world.pdf;" http://$PDFTOTEXT_IP/ > hello-world.txt
