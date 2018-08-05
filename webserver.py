@@ -7,6 +7,7 @@ from tempfile import TemporaryDirectory
 
 from flask import Flask, request, send_file
 
+
 @app.route('/', methods=['POST'])
 def handle_file():
     assert 'file' in request.files
