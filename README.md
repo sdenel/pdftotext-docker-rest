@@ -1,4 +1,4 @@
-# pdf2htmlex inside a Docker container
+[![Build Status](https://travis-ci.com/sdenel/pdftotext-docker-rest.svg?branch=master)](https://travis-ci.com/sdenel/pdftotext-docker-rest)
 
 pdftotext. As a webservice, containerized!
 
