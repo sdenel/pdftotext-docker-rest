@@ -9,6 +9,7 @@ from flask import Flask, request, send_file
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['POST'])
 def handle_file():
     assert 'file' in request.files
@@ -25,6 +26,8 @@ def handle_file():
 
 
 if __name__ == "__main__":
+    host = "0.0.0.0"
+    port = 80
     ip = socket.gethostbyname(socket.gethostname())
-    print("start listening:", ip, file=sys.stderr)
-    app.run(host='0.0.0.0', port=80)
+    print("start listening:", ip, host + ":" + str(port), file=sys.stderr)
+    app.run(host=host, port=port)
