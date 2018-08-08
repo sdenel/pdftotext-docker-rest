@@ -12,13 +12,19 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def handle_file():
-    assert 'file' in request.files
     with TemporaryDirectory() as temp_dir:
-        file = request.files['file']
-        file_path_in = os.path.join(temp_dir, file.filename)
-        # TODO: should throw an explicit error
-        assert file_path_in.endswith('.pdf')
-        file.save(file_path_in)
+        if 'file' in request.files:
+            file = request.files['file']
+            file_path_in = os.path.join(temp_dir, file.filename)
+            # TODO: should throw an explicit error
+            assert file_path_in.endswith('.pdf')
+            file.save(file_path_in)
+        else:
+            file_path_in = os.path.join(temp_dir, "unnamed.pdf")
+            data = request.stream.read()
+            with open(file_path_in, 'wb') as f:
+                f.write(data)
+            sys.stdout.flush()
         file_path_out = file_path_in + ".txt"
         call(["/usr/bin/pdftotext", file_path_in, file_path_out])
         r = send_file(file_path_out)
