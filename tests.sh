@@ -9,7 +9,7 @@ sleep 5
 
 wget http://www.xmlpdf.com/manualfiles/hello-world.pdf
 PDFTOTEXT_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' pdftotext-docker-rest`
-curl -F "file=@hello-world.pdf;" http://$PDFTOTEXT_IP/ > hello-world.txt
+curl -F "file=@hello-world.pdf;" http://$PDFTOTEXT_IP:8080/ > hello-world.txt
 
 echo -n "hello world\n\n\f" > hello-world-expected.txt
 if [ "`cat hello-world.txt`" != "`cat hello-world-expected.txt`" ]

@@ -5,7 +5,7 @@ pdftotext. As a webservice, containerized! The image is based on Alpine.
 ## Usage
 
 ```bash
-docker run -d -p8080:80 sdenel/pdftotext-docker-rest:latest
+docker run -d -p8080:8080 sdenel/pdftotext-docker-rest:latest
 ```
 Then, to test it:
 ```bash
