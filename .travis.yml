@@ -7,4 +7,4 @@ services:
 install:
   - pip install pycodestyle
 script:
-  - ./tests.sh
+  - ./tests/tests.sh
