@@ -27,8 +27,9 @@ def handle_file():
             sys.stdout.flush()
         file_path_out = file_path_in + ".txt"
         call(["/usr/bin/pdftotext", file_path_in, file_path_out])
-        r = send_file(file_path_out)
-        return r
+        with open(file_path_out, 'r') as f:
+            r = f.read()
+        return r.rstrip("\f")
 
 
 if __name__ == "__main__":
