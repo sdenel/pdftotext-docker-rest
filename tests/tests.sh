@@ -13,7 +13,7 @@ PDFTOTEXT_IP=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' pdftote
 #
 # Simple text
 #
-curl -v -F "file=@tests/hello-world.pdf;" http://$PDFTOTEXT_IP:8080/ > tests/hello-world.tmp.txt
+curl -v -F "file=@tests/hello-world.pdf;" http://$PDFTOTEXT_IP:8888/ > tests/hello-world.tmp.txt
 if [ "`cat tests/hello-world.tmp.txt`" != "`cat tests/hello-world-expected.txt`" ]
 then
   echo -e "\n\e[91mStep 1: hello-world.txt != hello-world-expected.txt\e[39m"
@@ -24,7 +24,7 @@ rm tests/hello-world.tmp.txt
 #
 # PDF provided in binary (application/octet-stream), not as a file
 #
-curl -v --header "Content-Type:application/octet-stream" --data-binary "@tests/hello-world.pdf" http://$PDFTOTEXT_IP:8080/ > tests/hello-world.tmp.txt
+curl -v --header "Content-Type:application/octet-stream" --data-binary "@tests/hello-world.pdf" http://$PDFTOTEXT_IP:8888/ > tests/hello-world.tmp.txt
 if [ "`cat tests/hello-world.tmp.txt`" != "`cat tests/hello-world-expected.txt`" ]
 then
   echo -e "\n\e[91mStep 2: hello-world.txt != hello-world-expected.txt\e[39m"
@@ -35,7 +35,7 @@ rm tests/hello-world.tmp.txt
 #
 # PDF with accents
 #
-curl -v -F "file=@tests/accents.pdf;" http://$PDFTOTEXT_IP:8080/ > tests/accents.tmp.txt
+curl -v -F "file=@tests/accents.pdf;" http://$PDFTOTEXT_IP:8888/ > tests/accents.tmp.txt
 if [ "`cat tests/accents.tmp.txt`" != "`cat tests/accents-expected.txt`" ]
 then
   echo -e "\n\e[91mStep 1: accents.txt != accents-expected.txt\e[39m"
