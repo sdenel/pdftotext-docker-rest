@@ -34,7 +34,7 @@ def handle_file():
 
 if __name__ == "__main__":
     host = "0.0.0.0"
-    port = 8080
+    port = 8888
     ip = socket.gethostbyname(socket.gethostname())
     print("start listening:", ip, host + ":" + str(port), file=sys.stderr)
     app.run(host=host, port=port)
