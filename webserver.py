@@ -13,34 +13,34 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def handle_file():
     with TemporaryDirectory() as temp_dir:
+        if 'file' in request.files:
+            if len(request.files) != 1:
+                return f"You must upload one PDF file for processing (len(request.files)={len(request.files)})", 400
 
-        if len(request.files) != 1:
-            return "You must upload one PDF file for processing", 400
+            files_dict = request.files.to_dict()
 
-        files_dict = request.files.to_dict()
+            for key in files_dict:
+                file = files_dict[key]
+                file_path_in = os.path.join(temp_dir, file.filename)
 
-        for key in files_dict:
-            file = files_dict[key]
-            file_path_in = os.path.join(temp_dir, file.filename)
+                if not file_path_in.lower().endswith('.pdf'):
+                    return f"Only .pdf files are allowed (file_path_in={file_path_in})", 400
 
-            if not file_path_in.lower().endswith('.pdf'):
-                return "Only .PDF files are allowed", 400
-
-            file.save(file_path_in)
+                file.save(file_path_in)
+        else:  # PDF provided in binary (application/octet-stream), not as a file
+            file_path_in = os.path.join(temp_dir, "unnamed.pdf")
+            data = request.stream.read()
+            with open(file_path_in, 'wb') as f:
+                f.write(data)
+            sys.stdout.flush()
 
         file_path_out = file_path_in + ".txt"
-
         cmd = ["/usr/bin/pdftotext"]
-
         params = request.args.get('params')
-
         if params:
             cmd.append(params)
-
         cmd.extend([file_path_in, file_path_out])
-
         call(cmd)
-
         return send_file(file_path_out)
 
 
