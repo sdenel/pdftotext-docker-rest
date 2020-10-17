@@ -2,7 +2,7 @@
 import os
 import socket
 import sys
-from subprocess import call
+from subprocess import Popen, PIPE
 from tempfile import TemporaryDirectory
 
 from flask import Flask, request, send_file
@@ -36,11 +36,19 @@ def handle_file():
 
         file_path_out = file_path_in + ".txt"
         cmd = ["/usr/bin/pdftotext"]
-        params = request.args.get('params')
+        params = request.values.get('params')
         if params:
-            cmd.append(params)
+            cmd.extend(params.split())
         cmd.extend([file_path_in, file_path_out])
-        call(cmd)
+
+        p = Popen(cmd, stdout=PIPE, stderr=PIPE)
+        out, err = p.communicate()
+
+        if p.returncode == 0:
+            return send_file(file_path_out)
+        else:
+            return "Failed to execute 'pdftotext' process:\n\n" + err.decode("utf-8"), 500
+
         return send_file(file_path_out)
 
 
