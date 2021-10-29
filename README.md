@@ -5,9 +5,9 @@ pdftotext. As a webservice, containerized! The image is based on Alpine. See als
 ## Usage
 
 ```bash
-docker run -d -p8888:8888 sdenel/pdftotext-docker-rest:latest
+docker run -d -p8888:8888 ghcr.io/sdenel/pdftotext-docker-rest:latest
 ```
-Then, to test it:
+Example of usage:
 ```bash
 wget http://www.xmlpdf.com/manualfiles/hello-world.pdf
 curl -F "file=@hello-world.pdf;" http://localhost:8888/

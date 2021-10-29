@@ -1,6 +1,6 @@
 FROM alpine:latest
 # Adapted from: https://github.com/frol/docker-alpine-python3/blob/master/Dockerfile
-RUN apk add --no-cache poppler-utils python3 && \
+RUN apk add --no-cache poppler-utils python3 bash && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools flask && \
